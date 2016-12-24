@@ -2,58 +2,131 @@ console.log("Fellowship loaded.");
 
 var makeMiddleEarth = function() {
   // 1.  Create a section tag with an id of "middle-earth".
+  var $middleEarth = jQuery('<section>');
+  $middleEarth.attr('id', 'middle-earth');
+  lands.forEach(function(land) {
   // 2.  Create an article tag for each land in the lands array.
+    var $land = jQuery('<article>');
   // 3.  Give each article tag a class of "land".
-  // 4.  Inside each article tag include an h1 tag with the name
-  //     of the land as content.
-  // 5.  Append each article.land to section#middle-earth.
+    $land.addClass('land');
+    // 4.  Inside each article tag include an h1 tag with the name
+    //     of the land as content.
+    var $title = jQuery('<h1>');
+    $title.text(land);
+    $land.append($title);
+    // 5.  Append each article.land to section#middle-earth.
+    $land.appendTo($middleEarth);
+  });
+
+
+
   // 6.  Append section#middle-earth to the document body.
+ jQuery('body').append($middleEarth);
 }
+
+makeMiddleEarth();
 
 var makeHobbits = function() {
   // 1.  Create a ul tag with an id of "hobbits".
-  // 2.  Create li tags for each Hobbit in the hobbits array.
-  // 3.  Give each li tag a class of "hobbit".
-  // 4.  Set the text of each li.hobbit to one of the Hobbits
-  //     in the array.
-  // 5.  Append the ul#hobbits to the article.land representing
+  var $hobbits = jQuery('<ul>');
+  $hobbits.attr('id', 'hobbits');
+  hobbits.forEach(function(hobbit){
+    // 2.  Create li tags for each Hobbit in the hobbits array.
+    var $hobbit = jQuery('<li>');
+    // 3.  Give each li tag a class of "hobbit".
+    $hobbit.addClass('hobbit');
+    // 4.  Set the text of each li.hobbit to one of the Hobbits
+    //     in the array.
+    $hobbit.text(hobbit);
+    $hobbits.append($hobbit);
+  })
+    // 5.  Append the ul#hobbits to the article.land representing
   //     "The Shire" (the first article tag on the page).
+  jQuery('.land').first().append($hobbits);
+  // jQuery('.land').eq(0).append($hobbits); //above line can be written like this also
 }
+
+makeHobbits()
+
 
 var keepItSecretKeepItSafe = function() {
   // 1.  Create a div with an id of "the-ring".
+    var $ring = jQuery('<div>');
+    $ring.attr('id','the-ring');
   // 2.  Give div#the-ring a class of "magic-imbued-jewelry".
+    $ring.addClass('magic-imbued-jewelry');
   // 3.  Add div#the-ring as a child element of the li.hobbit
+    var $hobbits = $('.hobbit');
+    var $frodo = $hobbits.first();
+    $frodo.append($ring);
   //     representing "Frodo."
 }
 
+keepItSecretKeepItSafe();
+
 var makeBuddies = function() {
   // 1.  Create an aside tag.
+  var $aside = jQuery('<aside>');
   // 2.  Create a ul tag with an id of "buddies" and append it to
   //     the aside tag.
+  var $buddies = jQuery('<ul>');
+  $buddies.attr('id', 'buddies');
+  $buddies.appendTo($aside);
   // 3.  Create li tags for each buddy in the buddies array in
   //     data.js.
+  buddies.forEach(function(buddy){
+    var $buddy = jQuery('<li>');
+    $buddy.addClass('buddy');
+    $buddy.text(buddy);
+    $buddy.appendTo($buddies);
+  });
   // 4   Give each li tag a class of "buddy" and append them to
   //       "ul#buddies".
   // 5.  Insert the aside tag as a child element of the secion.land
   //     representing "Rivendell."
-}
+  jQuery('.land').eq(1).append($aside);
+};
+
+makeBuddies();
 
 var beautifulStranger = function() {
   // 1.  Find the li.buddy representing "Strider".
+
+     var $Aragorn = jQuery('.buddy:contains("Strider")')
+     $Aragorn.text("Aragorn");
+     $Aragorn.css("color", "green");
+
+     //hardcoded
+    // var $buddy = jQuery('.buddy');
+    // $buddy.eq(2).text("Aragorn");
   // 2.  Change the "Strider" text to "Aragorn" and make its
   //     color green.
-}
+
+};
+
+beautifulStranger();
 
 var leaveTheShire = function() {
   // 1.  "Assemble the Hobbits" and move them (as a list) to Rivendell.
+  var $hobbits = jQuery('#hobbits');
+  // var $rivendell = jQuery('h1:contains("Rivendell")') //works but appends to h1
+  var $rivendell = jQuery('#buddies')
+  $hobbits.insertAfter($rivendell); //works
 }
+
+leaveTheShire();
 
 var forgeTheFellowShip = function() {
   // 1.  Create a div with an id of "the-fellowship" within the
   //     section.land for "Rivendell". Append a list to it.
+  var $fellowship = jQuery('<div>');
+  $fellowship.attr('id', 'the-fellowship');
+  var $list = jQuery('<ul>');
+  $fellowship.append($list);
+  $fellowship.appendTo('.land:contains(Rivendell)')
   // 2.  Add each hobbit and buddy one at a time to
   //     'div#the-fellowship' list.
+
   // 3.  After each character is added make an alert that they
   //     have joined your party.
 }
